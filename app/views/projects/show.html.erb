@@ -1,0 +1,87 @@
+
+<div class="card">
+<div class="card-body">
+<div class="card-header-title is-flex is-justify-content-space-between mb-5">
+      <h1 class="title"><%= @project.name %></h1>
+      <div>
+      <%= link_to '<button type="button" class="button is-warning">Edit</button>'.html_safe, edit_project_path(@project) %>
+      <%= link_to '<button type="button" class="button is-danger">Delete</button>'.html_safe, @project, method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
+      </div>
+</div>
+</div>
+<div class="container has-background-info-light p-3 mt-5">
+<%= form_with(model: [@task.project, @task]) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="control is-horizontal">
+    <div class="field">
+      <%= f.hidden_field :status, value:"not-started" %>
+      <%= f.text_field :name, class: 'input', placeholder: 'Enter task name...' %>
+    </div>
+    <div class="actions">
+      <%= f.submit class: 'button is-outlined'%>
+    </div>
+  </div>
+<% end %>
+
+</div>
+<hr>
+<% @project.tasks.each do |task| %>
+  <% if task.persisted? %>
+  <div class="card">
+  <div class="card-body is-flex 
+  is-justify-content-space-between
+  is-flex-direction-row p-5 mb-5">
+    <div class="content is-flex 
+  is-justify-content-flex-start
+  is-flex-direction-column">
+    <h5 class="tag status-tag is-<%= task.status_color %>"><%= task.status %></h5>
+    <h3 class="title is-size-5"><%= task.name %></h3>
+    <p><%= task.description %></p>
+    </div>
+    <div class="content is-flex 
+    is-justify-content-space-around
+  is-flex-direction-row">
+   <%= link_to ' <button class="button is-light m-5">Edit</button>'.html_safe, edit_project_task_path(task.project, task) %>
+   <%= link_to ' <button class="button is-light m-5">Delete</button>'.html_safe, [task.project, task], method: :delete, data: { confirm: 'Are you sure?' }  %>
+  </div>
+  </div>
+  </div>
+<% end %>
+<% end %>
+</table>
+<hr>
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+
+<p>
+<strong>Description:</strong>
+<%= @project.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @project.user_id %>
+  </p>
+  
+  <%= link_to 'Back', projects_path %>
+
+
+<hr>
+
+
+<br />
+
+

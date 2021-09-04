@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="card-content">
+    <div class="card-header-title is-flex is-justify-content-space-between">
+      <h1 class="title">Projects</h1>
+      <%= link_to '<button type="button" class="button is-link">New Project</button>'.html_safe, new_project_path %>
+    </div>
+<% @projects.each do |project| %>
+  <%= link_to project do %>
+  <div class="card">
+    <div class="card-body p-4">
+    <h5 class="title is-size-4"><%= project.name %></h5>
+    <p class="subtitle is-size-6"><%= project.description %></p>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+</div>
+<br>
+
+
